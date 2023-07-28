@@ -1,11 +1,20 @@
-import mongoose from 'mongoose';
-
-export const connect = async () => {
-    try {
-        await mongoose.connect(process.env.DB_CONNECTION_URL);
-        console.log('Database connected');
-    } catch (error) {
-        console.log(error.message);
-        process.exit(1);
-    }
+import mongoose from 'mongoose'
+import * as dotenv from 'dotenv'
+dotenv.config()
+class Database {
+   private static _database: Database
+   private constructor() {
+        mongoose.connect(process.env.DB_CONNECTION_URL)
+        .then(() => console.log('Connected with database'))
+        .catch(() => console.log('Not connected with database'))
+         
+   }
+   static getInstance() {
+      if (this._database) {
+         return this._database
+      }
+      this._database = new Database()
+      return this._database = new Database()
+   }
 }
+export default Database;

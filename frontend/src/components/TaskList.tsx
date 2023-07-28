@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import 'axios'
+import axios, {AxiosResponse} from 'axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Checkbox from '@mui/material/Checkbox';
-import axios from 'axios';
+import EditForm from './EditForm';
 
 interface ITask {
   task: any;
@@ -22,9 +22,31 @@ interface ITask {
 }
 
 const baseUrl: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
-const  defaultTask: ITask[] = []
 
+const deleteTask = async(id: string): Promise<AxiosResponse>  => {
+  try {
+    return axios.delete(`${baseUrl}/delete-task/${id}`);
+  } catch (e) {
+    console.error('Error deleting task');
+  }
+}
+const completeTask = async(id: string): Promise<AxiosResponse>  => {
+  try {
+    return axios.put(`${baseUrl}/complete-task/${id}`);
+  } catch (e) {
+    console.error('Error deleting task');
+  }
+}
 const Task = ({ task }: any) => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleEdit = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
     return (
         <TableRow
               key={task.title}
@@ -35,9 +57,10 @@ const Task = ({ task }: any) => {
               </TableCell>
               <TableCell align="right">{task.time.toString()}</TableCell>
               <TableCell align="right">
-                <IconButton>
+                <IconButton onClick={handleEdit}>
                   <EditIcon/>
                 </IconButton>
+                <EditForm open={open} onClose={handleClose}/>
               </TableCell>
               <TableCell align="right">
                 <IconButton>
@@ -52,18 +75,18 @@ const Task = ({ task }: any) => {
 }
 
 const TasksList = () => {
-  const [tasks, setTasks]: [ITask[],(tasks: ITask[]) => void] = useState(defaultTask);
+  const [tasks, setTasks] = useState<ITask>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  // useEffect(() =>{
-  //   axios.get<ITask[]>(`${baseUrl}/api/task`)
-  //   .then( => {
-  //     console.log(response)
-  //     setLoading(true);
-  //     setTasks(response.data);
-  //     setLoading(false);
-  //   },[]);
-  // })
+  useEffect(() =>{
+    setLoading(true);
+    axios.get(`${baseUrl}/api/tasks`)
+    .then((response: AxiosResponse) => {
+      setTasks(response.data);
+      console.log(tasks);
+      setLoading(false);
+    })
+  },[]);
   return (
       <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -77,14 +100,10 @@ const TasksList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {
-          
-          }
-          {
-            tasks.length === 0 &&(
-              <h4>No Available Task</h4>
-            )
-          }
+          {/* if loading display loading */}
+          {loading? (
+            <h5>Loading Task...</h5>
+          ): null}
         </TableBody>
       </Table>
     </TableContainer>

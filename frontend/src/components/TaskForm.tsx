@@ -45,7 +45,7 @@ const TaskForm = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-    const initialValues: MyFormValues = { title: '', date: new Date()};
+  const initialValues: MyFormValues = { title: '', date: new Date()};
   return (
     <div className='form-container'>
       <Button onClick={handleOpen} >Add Todo</Button>

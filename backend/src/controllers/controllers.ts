@@ -4,7 +4,7 @@ import { Task } from "../database/model";
 
 
 export const TaskController = {
-    create_task: async (req: Request, res: Response) => {
+    create_task: async (req: Request, res: Response):Promise<void> => {
         try{
             const {title, date} = req.body;
             const task = await Task.create({title, date});
@@ -14,7 +14,7 @@ export const TaskController = {
             res.status(500).json({error});
         }
     },
-    get_tasks: async (req: Request, res: Response) => {
+    get_all_tasks: async (req: Request, res: Response):Promise<void> => {
         try{
             const task = await Task.find();
             res.status(200).json({task});
@@ -23,12 +23,16 @@ export const TaskController = {
             res.status(500).json({error});
         }
     },
-    update_task: async (req: Request, res: Response) => {
+    update_task: async (req: Request, res: Response):Promise<void> => {
         try {
             const task = await Task.findById(req.params.id);
             if (task){
                 const {title, time} = req.body;
-                const updatedTask = await Task.findByIdAndUpdate(req.params.id, {title, time});
+                const updatedTask = await Task.findByIdAndUpdate(req.params.id,{
+                    title,
+                    time, 
+                    isCompleted: false
+                });
                 res.status(200).json({updatedTask});
             }
             else{
@@ -39,7 +43,7 @@ export const TaskController = {
             res.status(404).json({message: "task not found"});
         }
     },
-    complete_task:async (req: Request, res: Response) => {
+    complete_task:async (req: Request, res: Response):Promise<void> => {
         const update = {isCompleted: true};
         try {
             const task = await Task.findByIdAndUpdate(req.params.id, update);
@@ -51,7 +55,7 @@ export const TaskController = {
             res.status(400).json(error);
         }
     },
-    delete_task:async (req: Request, res: Response) => {
+    delete_task:async (req: Request, res: Response):Promise<void> => {
         try{
             const task = await Task.findByIdAndDelete(req.params.id);
             res.status(204).end(task);
