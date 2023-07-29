@@ -47,6 +47,9 @@ const Task = ({ task }: any):React.ReactElement => {
   const [open, setOpen] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted);
 
+  // MM-DD-YYYY
+  const formattedDate = new Date(task.date).toLocaleDateString("en-US");
+
   const handleEdit = () => {
     setOpen(true);
   }
@@ -73,7 +76,7 @@ const Task = ({ task }: any):React.ReactElement => {
       <TableCell component="th" scope="row">
         {task.title}
       </TableCell>
-      <TableCell align="right">{task.date}</TableCell>
+      <TableCell align="right">{formattedDate}</TableCell>
       <TableCell align="right">
         <IconButton onClick={handleEdit}>
           <EditIcon/>
@@ -82,7 +85,7 @@ const Task = ({ task }: any):React.ReactElement => {
       </TableCell>
       <TableCell align="right">
         <IconButton onClick={()=>handleDelete(task._id)}>
-          <DeleteIcon/>
+          <DeleteIcon style={{color: 'red'}}/>
         </IconButton>
       </TableCell>
       <TableCell align="right">

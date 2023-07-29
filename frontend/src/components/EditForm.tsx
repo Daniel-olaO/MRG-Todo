@@ -62,42 +62,40 @@ const EditForm =(props: EditFormDialogProps): React.ReactElement => {
     onClose();
   };
 
-    return (
-        <div>
-            <Dialog onClose={handleClose} open={open}>
-                <DialogTitle>Edit Task</DialogTitle>
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={async (values) => {
-                        await handleEdit(taskId, values);
-                    }}
-                    >
-                        {(props)=>(
-                        <Form>
-                            <div className="form-group">
-                                <Field name="title" type="text"
-                                as={TextField} label="Task" variant="filled"
-                                />
-                                <ErrorMessage name="title" component="div" className="error"/>
-                            </div>
-                            <div className="form-group">
-                                <Field name="date" type="date"
-                                as={TextField} label="date"
-                                variant="filled"/>
-                                <ErrorMessage name="date" component="div"className="error"/>
-                            </div>
-                            <div className="form-group">
-                                <Button type="submit" variant="contained" color="primary">
-                                Add
-                                </Button>
-                            </div>
-                        </Form>
-                        )}
-        </Formik>
-            </Dialog>
-        </div>
-    )
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>Edit Task</DialogTitle>
+      <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={async (values) => {
+              await handleEdit(taskId, values);
+          }}
+          >
+          {(props)=>(
+            <Form>
+              <div className="form-group">
+                  <Field name="title" type="text"
+                  as={TextField} label="Task" variant="filled"
+                  />
+                  <ErrorMessage name="title" component="div" className="error"/>
+              </div>
+              <div className="form-group">
+                  <Field name="date" type="date"
+                  as={TextField} label="date"
+                  variant="filled"/>
+                  <ErrorMessage name="date" component="div"className="error"/>
+              </div>
+              <div className="form-group">
+                  <Button type="submit" variant="contained" color="primary">
+                  Edit Task
+                  </Button>
+              </div>
+          </Form>
+        )}
+      </Formik>
+    </Dialog>
+  );
 }
 
 export default EditForm;

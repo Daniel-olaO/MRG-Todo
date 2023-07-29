@@ -19,7 +19,8 @@
     background-color: antiquewhite;
     display: flex;
     flex-direction: row;
-    height: 50px;
+    height: 20%;
+    margin-bottom: 3%;
 }
 .modal-content {
   width: 100%;
@@ -50,7 +51,6 @@
 .form-container button {
   width: 100px;
   height: 30px;
-  background-color: #4CAF50;
   border: none;
   margin-left: 60%;
   margin-top: 5%;

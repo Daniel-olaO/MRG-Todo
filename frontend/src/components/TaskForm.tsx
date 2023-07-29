@@ -72,7 +72,7 @@ const TaskForm = ():React.ReactElement => {
 
   return (
     <div className='form-container'>
-      <Button onClick={handleOpen} >Add Todo</Button>
+      <Button onClick={handleOpen}>Add Todo</Button>
       <Modal
         open={open}
         onClose={handleClose}
