@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import './App.css';
-import Button from '@mui/material/Button';
-import TaskList from './components/TaskList';
-import TaskForm from './components/TaskForm';
-import Navbar from './components/Navbar';
+import React from 'react'
+import './App.css'
+import TaskList from './components/TaskList'
+import TaskForm from './components/TaskForm'
+import Navbar from './components/Navbar'
 
-function App() {
+function App (): React.ReactElement {
   return (
     <div className="App">
       <Navbar />
       <TaskList />
-      <TaskForm />      
+      <TaskForm />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -11,16 +11,16 @@ export const TaskController = {
             res.status(201).json({task});
         }
         catch(error){
-            res.status(500).json({error});
+            res.status(500).json(error);
         }
     },
     get_all_tasks: async (req: Request, res: Response):Promise<void> => {
         try{
             const task = await Task.find();
-            res.status(200).json({task});
+            res.status(200).json(task);
         }
         catch(error){
-            res.status(500).json({error});
+            res.status(500).json(error);
         }
     },
     update_task: async (req: Request, res: Response):Promise<void> => {
@@ -33,7 +33,7 @@ export const TaskController = {
                     time, 
                     isCompleted: false
                 });
-                res.status(200).json({updatedTask});
+                res.status(200).json(updatedTask);
             }
             else{
                 res.status(404).json({message: "task not found"});
@@ -47,21 +47,20 @@ export const TaskController = {
         const update = {isCompleted: true};
         try {
             const task = await Task.findByIdAndUpdate(req.params.id, update);
-            if (task) {
+            if (task) {  
                 res.status(200).json(task);
             }
-        }
-        catch (error) {
+        } catch (error) {
             res.status(400).json(error);
         }
     },
     delete_task:async (req: Request, res: Response):Promise<void> => {
         try{
-            const task = await Task.findByIdAndDelete(req.params.id);
-            res.status(204).end(task);
+            const task = await Task.findByIdAndDelete(req.params._id);
+            res.status(204).send(task);
         }
         catch(error) {
-            res.status(400).json({error});
+            res.status(400).json(error);
         }
     }
 }

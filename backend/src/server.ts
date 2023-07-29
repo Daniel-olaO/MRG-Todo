@@ -10,7 +10,7 @@ export const app: Express = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors<Request>());
-// Database.getInstance()
+Database.getInstance()
 
 if (process.env.NODE_ENV === 'DEV' || process.env.NODE_ENV === 'PRODUCTION') {
    Database.getInstance()

@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+# MRG-todo app(user interface)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a react app that allows the user to Add, Edit, Delete and View their to-do list. The app also allows the user to complete their todos by clicking the status button
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Installation](#installation)
+- [Usage](#usage)
+- [Demo](#demo)
+- [Tools](#tools)
+- [Author](#author)
+- [references](#references)
 
-### `npm start`
+# Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+use npm install to install all dependencies
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+npm install
+```
 
-### `npm test`
+# Usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+add a .env file to the root directory and add the following:
 
-### `npm run build`
+```bash
+REACT_APP_API_BASE_URL=your_nasa_apod_api_url
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+use npm start to start the app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+users must sign up with a name, a phone number, an email address and a password. The phone number must have the country code of the country in which the phone number originated: Canada -> +16574832074. The email address must be valid. The user will receive a welcome text message. The user will also receive a text message every day with the NASA Astronomy Picture of the Day.
 
-### `npm run eject`
+# Demo
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+link: x
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Tools
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This app was created using React, ESlint, material-UI, typescript
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Author
 
-## Learn More
+MRG-todo app was created by:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Daniel Adedeji
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Github](https://github.com/Daniel-olaO)

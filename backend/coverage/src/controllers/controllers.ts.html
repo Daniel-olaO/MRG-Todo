@@ -129,8 +129,7 @@
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,7 +180,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -203,26 +201,26 @@ import { Task } from "../database/model";
 &nbsp;
 &nbsp;
 export const TaskController = {
-    create_task: async (req: Request, res: Response) =&gt; {
+    create_task: async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
         try{
             const {title, date} = req.body;
             const task = await Task.create({title, date});
             res.status(201).json({task});
         }
         catch(error){
-<span class="cstat-no" title="statement not covered" >            res.status(500).json({error});</span>
+<span class="cstat-no" title="statement not covered" >            res.status(500).json(error);</span>
         }
     },
-    get_all_tasks: async (req: Request, res: Response) =&gt; {
+    get_all_tasks: async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
         try{
             const task = await Task.find();
-            res.status(200).json({task});
+            res.status(200).json(task);
         }
         catch(error){
-<span class="cstat-no" title="statement not covered" >            res.status(500).json({error});</span>
+<span class="cstat-no" title="statement not covered" >            res.status(500).json(error);</span>
         }
     },
-    update_task: <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+    update_task: <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response):Promise&lt;void&gt; =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
 <span class="cstat-no" title="statement not covered" >        try {</span>
             const task = <span class="cstat-no" title="statement not covered" >await Task.findById(req.params.id);</span>
 <span class="cstat-no" title="statement not covered" >            if (task){</span>
@@ -232,7 +230,7 @@ export const TaskController = {
                     time, 
                     isCompleted: false
                 });
-<span class="cstat-no" title="statement not covered" >                res.status(200).json({updatedTask});</span>
+<span class="cstat-no" title="statement not covered" >                res.status(200).json(updatedTask);</span>
             }
             else{
 <span class="cstat-no" title="statement not covered" >                res.status(404).json({message: "task not found"});</span>
@@ -242,25 +240,24 @@ export const TaskController = {
 <span class="cstat-no" title="statement not covered" >            res.status(404).json({message: "task not found"});</span>
         }
     },
-    complete_task:<span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+    complete_task:<span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response):Promise&lt;void&gt; =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
         const update = <span class="cstat-no" title="statement not covered" >{isCompleted: true};</span>
 <span class="cstat-no" title="statement not covered" >        try {</span>
             const task = <span class="cstat-no" title="statement not covered" >await Task.findByIdAndUpdate(req.params.id, update);</span>
-<span class="cstat-no" title="statement not covered" >            <span class="missing-if-branch" title="if path not taken" >I</span>if (task) {</span>
+<span class="cstat-no" title="statement not covered" >            <span class="missing-if-branch" title="if path not taken" >I</span>if (task) {  </span>
 <span class="cstat-no" title="statement not covered" >                res.status(200).json(task);</span>
             }
-        }
-        catch (error) {
+        } catch (error) {
 <span class="cstat-no" title="statement not covered" >            res.status(400).json(error);</span>
         }
     },
-    delete_task:<span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+    delete_task:<span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response):Promise&lt;void&gt; =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
 <span class="cstat-no" title="statement not covered" >        try{</span>
-            const task = <span class="cstat-no" title="statement not covered" >await Task.findByIdAndDelete(req.params.id);</span>
-<span class="cstat-no" title="statement not covered" >            res.status(204).end(task);</span>
+            const task = <span class="cstat-no" title="statement not covered" >await Task.findByIdAndDelete(req.params._id);</span>
+<span class="cstat-no" title="statement not covered" >            res.status(204).send(task);</span>
         }
         catch(error) {
-<span class="cstat-no" title="statement not covered" >            res.status(400).json({error});</span>
+<span class="cstat-no" title="statement not covered" >            res.status(400).json(error);</span>
         }
     }
 }
@@ -271,7 +268,7 @@ export const TaskController = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-28T20:34:40.351Z
+                at 2023-07-29T14:03:25.130Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

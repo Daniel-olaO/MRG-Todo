@@ -3,7 +3,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 const mongod = MongoMemoryServer.create();
 export const connect = async () => {
    const uri = await (await mongod).getUri();
-   await mongoose.connect(uri);
+   await mongoose.createConnection(uri);
 }
 export const closeDatabase = async () => {
    await mongoose.connection.dropDatabase();

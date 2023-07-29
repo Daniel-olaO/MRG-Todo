@@ -6,10 +6,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
-const baseUrl: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
+const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
 
 export interface EditFormDialogProps {
   open: boolean;
+  taskId: string;
   onClose: () => void;
 }
  interface MyFormValues {
@@ -17,11 +18,18 @@ export interface EditFormDialogProps {
    date: Date;
  }
 
-const ediTtask = async(id: string): Promise<AxiosResponse>  => {
-  try {
-    return axios.put(`${baseUrl}/update-task/${id}`);
+const ediTtask = async(id: string, newTask: any): Promise<any>  => {
+    try {
+    return axios.put(`${API_URL}/update-task/${id}`, newTask,
+    {headers: {
+      'Content-Type': 'application/json',
+    }
+    })
+    .then((response: AxiosResponse) => {
+      console.log(response);
+    })
   } catch (e) {
-    console.error('Error deleting task');
+    console.error(e)
   }
 }
 const validationSchema = Yup.object({
@@ -34,9 +42,21 @@ const validationSchema = Yup.object({
       .required('Time is required'),
 });
 
-const EditForm =(props: EditFormDialogProps) => {
-  const { onClose, open } = props;
+const EditForm =(props: EditFormDialogProps): React.ReactElement => {
+  const { onClose, open , taskId} = props;
+  const [message, setMessage] = useState<string>('');
   const initialValues: MyFormValues = { title: '', date: new Date()};
+
+  const handleEdit = async (id:string, task:any): Promise<void> => {
+    const response = await ediTtask(id, task);
+    
+    if (response.status === 200) {
+      setMessage('Task updated successfully');
+    }
+    else{
+      setMessage('Task update failed');
+    }
+  }
 
   const handleClose = () => {
     onClose();
@@ -50,7 +70,7 @@ const EditForm =(props: EditFormDialogProps) => {
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={async (values) => {
-                        await console.log("hello");
+                        await handleEdit(taskId, values);
                     }}
                     >
                         {(props)=>(

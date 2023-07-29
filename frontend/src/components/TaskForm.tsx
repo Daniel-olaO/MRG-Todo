@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -8,12 +8,20 @@ import Typography from '@mui/material/Typography';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 
-async function createTask(task: any) {
-    if (task) {
-        const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:8000';
-        const response = await axios.post(`${baseURL}/tasks`, task);
-        return response.data;
-    }
+
+const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
+
+
+const createTask = async(task:any):Promise<any> => {
+  try {
+    return await axios.post(`${API_URL}/create-task`, task, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 const validationSchema = Yup.object({
@@ -41,11 +49,27 @@ const style = {
    title: string;
    date: Date;
  }
-const TaskForm = () => {
-  const [open, setOpen] = useState(false);
+const TaskForm = ():React.ReactElement => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [message, setMessage] = useState<string>('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const initialValues: MyFormValues = { title: '', date: new Date()};
+
+  const handleCreateTask = async (task: any):Promise<void> => {
+    setLoading(true);
+    const response = await createTask(task);
+    setLoading(false);
+    if (response.status === 201){
+      setMessage('Task created successfully');
+    }
+    else{
+      setMessage('Error creating task');
+    }
+
+  }
+
   return (
     <div className='form-container'>
       <Button onClick={handleOpen} >Add Todo</Button>
@@ -63,7 +87,7 @@ const TaskForm = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={async (values) => {
-            await console.log("hello");
+            await handleCreateTask(values);
           }}
         >
           {(props)=>(

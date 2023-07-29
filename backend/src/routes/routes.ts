@@ -17,14 +17,14 @@ router.post<object, MessageResponse>('/create-task',
 router.get<object, Task[]>('/tasks',
     TaskController.get_all_tasks
 );
-router.put<object, MessageResponse>('/updatetask/:id',
+router.put<object, MessageResponse>('/update-task/:id',
     validateTask,
     TaskController.update_task
 );
 router.put<object, MessageResponse>('/complete-task/:id',
     TaskController.complete_task
 );
-router.delete<object, MessageResponse>('/delete-task/:id',
+router.delete<object, MessageResponse>('/delete-task/:_id',
     TaskController.delete_task
 );
 
