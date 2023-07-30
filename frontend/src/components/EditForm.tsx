@@ -1,66 +1,66 @@
 import React, { useState } from 'react';
-import axios, {AxiosResponse} from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
+const API_URL: any = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
 
 export interface EditFormDialogProps {
-  open: boolean;
-  taskId: string;
-  onClose: () => void;
+  open: boolean
+  taskId: string
+  onClose: () => void
 }
- interface MyFormValues {
-   title: string;
-   date: Date;
- }
+interface MyFormValues {
+  title: string
+  date: Date
+}
 
-const ediTtask = async(id: string, newTask: any): Promise<any>  => {
-    try {
-    return axios.put(`${API_URL}/update-task/${id}`, newTask,
-    {headers: {
-      'Content-Type': 'application/json',
-    }
-    })
-    .then((response: AxiosResponse) => {
-      console.log(response);
-    })
+const ediTtask = async (id: string, newTask: any): Promise<any> => {
+  try {
+    await axios.put(`${API_URL}/update-task/${id}`, newTask,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response: AxiosResponse) => {
+        console.log(response);
+      })
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 const validationSchema = Yup.object({
   title: Yup
-      .string()
-      .default('')
-      .required('A Task is required'),
+    .string()
+    .default('')
+    .required('A Task is required'),
   date: Yup
-      .date()
-      .required('Time is required'),
+    .date()
+    .required('Time is required')
 });
 
-const EditForm =(props: EditFormDialogProps): React.ReactElement => {
-  const { onClose, open , taskId} = props;
+const EditForm = (props: EditFormDialogProps): React.ReactElement => {
+  const { onClose, open, taskId } = props;
   const [message, setMessage] = useState<string>('');
-  const initialValues: MyFormValues = { title: '', date: new Date()};
+  const initialValues: MyFormValues = { title: '', date: new Date() };
 
-  const handleEdit = async (id:string, task:any): Promise<void> => {
+  const handleEdit = async (id: string, task: any): Promise<void> => {
     const response = await ediTtask(id, task);
-    
+
     if (response.status === 200) {
       setMessage('Task updated successfully');
-    }
-    else{
+    } else {
       setMessage('Task update failed');
     }
   }
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     onClose();
-  };
+  }
 
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -69,10 +69,10 @@ const EditForm =(props: EditFormDialogProps): React.ReactElement => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={async (values) => {
-              await handleEdit(taskId, values);
+            await handleEdit(taskId, values);
           }}
           >
-          {(props)=>(
+          {(props) => (
             <Form>
               <div className="form-group">
                   <Field name="title" type="text"
@@ -92,10 +92,10 @@ const EditForm =(props: EditFormDialogProps): React.ReactElement => {
                   </Button>
               </div>
           </Form>
-        )}
+          )}
       </Formik>
     </Dialog>
   );
 }
 
-export default EditForm;
+export default EditForm

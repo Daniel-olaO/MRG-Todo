@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Navbar() {
+function Navbar (): React.ReactElement {
   return (
     <nav className="App-header">
-        <h2>MRG-TODO app</h2>
+        <h1>MRG-TODO </h1>
       </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

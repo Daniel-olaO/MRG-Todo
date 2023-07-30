@@ -6,6 +6,7 @@ This is a server for the MRG-todo app. It is a simple to-do app that allows user
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Path](#path)
 - [Demo](#demo)
 - [Tools](#tools)
 - [Author](#author)
@@ -42,6 +43,15 @@ use npm start to start the server
 ```bash
 npm start
 ```
+
+# Path
+
+- GET /api/task- get all tasks
+- GET /api/task/:\_id - get a task by id
+- POST /api/create-task - create a task
+- PUT /api/update-task/:\_id - update a task
+- PUT /api/complete-task/:\_id - update a task status
+- DELETE /api/delete-task/:\_id - delete a task
 
 # Demo
 

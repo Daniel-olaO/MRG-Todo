@@ -1,14 +1,33 @@
 import { Request, Response } from "express";
+import moment from 'moment';
 import { Task } from "../database/model";
 
-
+moment("12-25-1995", "MM-DD-YYYY");
 
 export const TaskController = {
     create_task: async (req: Request, res: Response):Promise<void> => {
+        const today:string = new Date().toLocaleDateString("en-US");
+
         try{
             const {title, date} = req.body;
-            const task = await Task.create({title, date});
-            res.status(201).json({task});
+            if (moment(date).isSameOrAfter(today)){
+                const task = await Task.create({title, date});
+                res.status(201).json(task);
+            }
+            else{
+                res.status(400).json({
+                    message: "date must be greater than or equal to current date"
+                });
+            }
+        }
+        catch(error){
+            res.status(500).json(error);
+        }
+    },
+    get_task: async (req: Request, res: Response):Promise<void> => {
+        try{
+            const task = await Task.findById(req.params._id);
+            res.status(200).json(task);
         }
         catch(error){
             res.status(500).json(error);
@@ -27,13 +46,22 @@ export const TaskController = {
         try {
             const task = await Task.findById(req.params.id);
             if (task){
-                const {title, time} = req.body;
-                const updatedTask = await Task.findByIdAndUpdate(req.params.id,{
-                    title,
-                    time, 
-                    isCompleted: false
-                });
-                res.status(200).json(updatedTask);
+                const {title, date} = req.body;
+                const oldDate:string = task.date.toLocaleTimeString("en-US");
+
+                if (moment(date).isSameOrAfter(oldDate)){
+                    const updatedTask = await Task.findByIdAndUpdate(req.params.id,{
+                        title,
+                        date, 
+                        isCompleted: false
+                    });
+                    res.status(200).json(updatedTask);
+                }
+                else{
+                    res.status(400).json({
+                        message: "date must be greater than or equal to current date"
+                    });
+                }
             }
             else{
                 res.status(404).json({message: "task not found"});

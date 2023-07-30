@@ -14,7 +14,10 @@ router.post<object, MessageResponse>('/create-task',
     validateTask,
     TaskController.create_task
 );
-router.get<object, Task[]>('/tasks',
+router.get<object, Task>('/task/:_id',
+    TaskController.get_task
+);
+router.get<object, Task[]>('/task',
     TaskController.get_all_tasks
 );
 router.put<object, MessageResponse>('/update-task/:id',
