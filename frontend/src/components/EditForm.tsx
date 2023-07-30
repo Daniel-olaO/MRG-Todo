@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios, { type AxiosResponse } from 'axios';
+import React from 'react';
+import axios, { type AxiosResponse, type AxiosError } from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -18,20 +18,12 @@ interface MyFormValues {
   date: Date
 }
 
-const ediTtask = async (id: string, newTask: any): Promise<any> => {
-  try {
-    await axios.put(`${API_URL}/update-task/${id}`, newTask,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((response: AxiosResponse) => {
-        console.log(response);
-      })
-  } catch (e) {
-    console.error(e);
-  }
+const editTask = async (id: string, newTask: any): Promise<AxiosResponse> => {
+  return await axios.put(`${API_URL}/update-task/${id}`, newTask, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 }
 const validationSchema = Yup.object({
   title: Yup
@@ -45,17 +37,15 @@ const validationSchema = Yup.object({
 
 const EditForm = (props: EditFormDialogProps): React.ReactElement => {
   const { onClose, open, taskId } = props;
-  const [message, setMessage] = useState<string>('');
   const initialValues: MyFormValues = { title: '', date: new Date() };
 
   const handleEdit = async (id: string, task: any): Promise<void> => {
-    const response = await ediTtask(id, task);
-
-    if (response.status === 200) {
-      setMessage('Task updated successfully');
-    } else {
-      setMessage('Task update failed');
-    }
+    editTask(id, task).then(() => {
+      onClose();
+    })
+      .catch(() => {
+        alert('Error editing task: try selecting a later date');
+      });
   }
 
   const handleClose = (): void => {

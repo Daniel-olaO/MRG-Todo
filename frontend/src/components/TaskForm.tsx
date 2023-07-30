@@ -18,7 +18,7 @@ const createTask = async (task: any): Promise<any> => {
       }
     })
   } catch (e) {
-    console.error(e);
+    console.log('Error creating task')
   }
 }
 

@@ -4,7 +4,7 @@ import * as Joi from "joi";
 export const validateTask = function(req:Request, res:Response, next:NextFunction) {
   const schema = Joi.object({
     title: Joi.string().required(),
-    date: Joi.date().required(),
+    date: Joi.date().min('now').required()
   });
   const validation = schema.validate(req.body);
   if (validation.error) {

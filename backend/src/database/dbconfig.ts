@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
 import * as dotenv from 'dotenv'
+import mongoose from 'mongoose'
 dotenv.config()
 class Database {
    private static _database: Database
@@ -7,8 +7,8 @@ class Database {
         mongoose.connect(process.env.DB_CONNECTION_URL)
         .then(() => console.log('Connected with database'))
         .catch(() => console.log('Not connected with database'))
-         
-   }
+      }
+      
    static getInstance() {
       if (this._database) {
          return this._database

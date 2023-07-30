@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.04% </span>
+                <span class="strong">26% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/47</span>
+                <span class='fraction'>13/50</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">14.28% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/7</span>
+                <span class='fraction'>1/7</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.04% </span>
+                <span class="strong">26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/47</span>
+                <span class='fraction'>13/50</span>
             </div>
         
             
@@ -157,24 +157,31 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,6 +203,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -207,7 +215,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -217,6 +228,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -252,23 +264,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response } from "express";
-import moment from 'moment';
+// import moment from 'moment';
 import { Task } from "../database/model";
 &nbsp;
-moment("12-25-1995", "MM-DD-YYYY");
+// moment("12-25-1995", "MM-DD-YYYY");
 &nbsp;
 export const TaskController = {
     create_task: async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
-        const today:string = new Date().toLocaleDateString("en-US");
+        // const today:string = new Date().toLocaleDateString("en-US");
 &nbsp;
         try{
             const {title, date} = req.body;
-            if (moment(date).isSameOrAfter(today)){
+            // eslint-disable-next-line no-constant-condition
+            if (true){
                 const task = await Task.create({title, date});
                 res.status(201).json(task);
             }
-            else{
-                res.status(400).json({
+            else<span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >                res.status(400).json({</span>
                     message: "date must be greater than or equal to current date"
                 });
             }
@@ -289,6 +302,7 @@ export const TaskController = {
     get_all_tasks: async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
         try{
             const task = await Task.find();
+            console.log(task);
             res.status(200).json(task);
         }
         catch(error){
@@ -296,13 +310,16 @@ export const TaskController = {
         }
     },
     update_task: <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response):Promise&lt;void&gt; =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >        console.log("update task");</span>
 <span class="cstat-no" title="statement not covered" >        try {</span>
             const task = <span class="cstat-no" title="statement not covered" >await Task.findById(req.params.id);</span>
 <span class="cstat-no" title="statement not covered" >            if (task){</span>
                 const {title, date} = <span class="cstat-no" title="statement not covered" >req.body;</span>
-                const oldDate:string = <span class="cstat-no" title="statement not covered" >task.date.toLocaleTimeString("en-US");</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >                if (moment(date).isSameOrAfter(oldDate)){</span>
+                const oldDate:string = <span class="cstat-no" title="statement not covered" >task.date.toLocaleDateString("en-US");</span>
+                const newDate:string = <span class="cstat-no" title="statement not covered" >date.toLocaleDateString("en-US");</span>
+<span class="cstat-no" title="statement not covered" >                console.log("old date: " + oldDate);</span>
+<span class="cstat-no" title="statement not covered" >                console.log("new date: " + newDate);</span>
+<span class="cstat-no" title="statement not covered" >                if (task){</span>
                     const updatedTask = <span class="cstat-no" title="statement not covered" >await Task.findByIdAndUpdate(req.params.id,{</span>
                         title,
                         date, 
@@ -311,6 +328,7 @@ export const TaskController = {
 <span class="cstat-no" title="statement not covered" >                    res.status(200).json(updatedTask);</span>
                 }
                 else{
+<span class="cstat-no" title="statement not covered" >                    console.error("date must be greater than or equal to current date");</span>
 <span class="cstat-no" title="statement not covered" >                    res.status(400).json({</span>
                         message: "date must be greater than or equal to current date"
                     });
@@ -352,7 +370,7 @@ export const TaskController = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-30T11:36:44.634Z
+                at 2023-07-30T18:17:36.076Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -13,5 +13,4 @@ const TaskSchema = new mongoose.Schema<TaskDocument>({
 });
 
 
-
 export const Task = mongoose.model<TaskDocument>("TaskSchema", TaskSchema);
