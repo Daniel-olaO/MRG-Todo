@@ -1,5 +1,5 @@
 import React from 'react';
-import axios, { type AxiosResponse, type AxiosError } from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -53,7 +53,7 @@ const EditForm = (props: EditFormDialogProps): React.ReactElement => {
   }
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={handleClose} open={open} className='dialog-box'>
       <DialogTitle>Edit Task</DialogTitle>
       <Formik
           initialValues={initialValues}

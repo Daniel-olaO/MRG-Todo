@@ -1,13 +1,24 @@
-import * as dotenv from 'dotenv'
-import mongoose from 'mongoose'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import * as dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import { randomBytes } from 'crypto';  
 dotenv.config()
 class Database {
    private static _database: Database
+   env: any = process.env
    private constructor() {
-        mongoose.connect(process.env.DB_CONNECTION_URL)
+      const url = this.env.NODE_ENV === 'test'? this.randomizeMongoURL(this.env.DB_CONNECTION_URL):
+      this.env.DB_CONNECTION_URL;
+        mongoose.connect(url)
         .then(() => console.log('Connected with database'))
         .catch(() => console.log('Not connected with database'))
-      }
+   }
+   private randomizeMongoURL(url: string): string {
+		return url.replace(
+			/([^/]\/)([^/][a-zA-Z-_0-9]+)/,
+			`$1${randomBytes(4).toString('hex')}`,
+		);
+	}
       
    static getInstance() {
       if (this._database) {

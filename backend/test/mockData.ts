@@ -1,7 +1,11 @@
+//store tomorrow's date in a variable
+const tomorrow: Date = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+
 
 export const validTask = {
     'title': 'Running',
-    'date': new Date()
+    'date': tomorrow
 };
 export const TaskMissingTaskName = {
     'title': '',

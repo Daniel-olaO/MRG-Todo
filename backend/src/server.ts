@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors<Request>());
 Database.getInstance()
 
-if (process.env.NODE_ENV === 'DEV' || process.env.NODE_ENV === 'PRODUCTION') {
+if (process.env.NODE_ENV === 'DEV' || process.env.NODE_ENV === 'TEST') {
    Database.getInstance()
 }
 

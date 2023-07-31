@@ -9,7 +9,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import Task from './Task';
+import TaskForm from './TaskForm';
 import ITask from '../interfaces/Task';
 
 const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
@@ -17,6 +20,14 @@ const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:
 const TasksList = (): React.ReactElement => {
   const [tasks, setTasks] = useState<ITask[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
+
+  const handleAdd = (): void => {
+    setOpen(true)
+  }
+  const handleClose = (): void => {
+    setOpen(false)
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -28,15 +39,16 @@ const TasksList = (): React.ReactElement => {
       })
   }, [])
   return (
+    <Container>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell align="right">Status</TableCell>
             <TableCell>Task</TableCell>
-            <TableCell align="right">Date</TableCell>
+            <TableCell align="right">Due Date</TableCell>
             <TableCell align="right">Edit</TableCell>
             <TableCell align="right">Delete</TableCell>
-            <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,6 +62,15 @@ const TasksList = (): React.ReactElement => {
         </TableBody>
       </Table>
     </TableContainer>
+    <div className="add-btn-container">
+      <Button variant="contained"
+        className='add-btn'
+        onClick={handleAdd}>
+          Add Task
+      </Button>
+      <TaskForm open={open} onClose={handleClose}/>
+    </div>
+    </Container>
   )
 }
 

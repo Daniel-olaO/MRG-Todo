@@ -63,6 +63,14 @@ const Task = ({ task }: any): React.ReactElement => {
       key={task}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
+      <TableCell align="right">
+        <Checkbox
+          checked={isCompleted}
+          onChange={async() => {
+            await handleComplete(task._id, isCompleted);
+          }}
+        />
+      </TableCell>
       <TableCell component="th" scope="row" className='task-cell'>
         {task.title}
       </TableCell>
@@ -79,14 +87,6 @@ const Task = ({ task }: any): React.ReactElement => {
         }}>
           <DeleteIcon style={{ color: 'red' }}/>
         </IconButton>
-      </TableCell>
-      <TableCell align="right">
-        <Checkbox
-          checked={isCompleted}
-          onChange={async() => {
-            await handleComplete(task._id, isCompleted);
-          }}
-        />
       </TableCell>
     </TableRow>
   )
