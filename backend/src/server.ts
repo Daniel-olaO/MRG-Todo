@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'DEV' || process.env.NODE_ENV === 'TEST') {
 app.use('/api', router);
 
 app.get('/api', (req:Request, res:Response):Response =>{
-    return res.status(200).send({message: 'Welcome to MRG todo API!'});
+    return res.status(200).send({message: 'Welcome t MRG todo API!'});
 });
 
 

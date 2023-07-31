@@ -1,24 +1,22 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
-/* eslint-disable import/extensions */
-import React, { useState, useEffect } from 'react';
-import axios, { type AxiosResponse } from 'axios';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Task from './Task';
-import TaskForm from './TaskForm';
-import ITask from '../interfaces/Task';
+import React, { useState, useEffect } from 'react'
+import axios, { type AxiosResponse } from 'axios'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Task from './Task'
+import TaskForm from './TaskForm'
+import ITask from '../interfaces/Task'
 
-const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
+const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api'
 
 const getTasks = async (): Promise<AxiosResponse> => {
-  return await axios.get(`${API_URL}/task`);
+  return await axios.get(`${API_URL}/task`)
 }
 const TasksList = (): React.ReactElement => {
   const [tasks, setTasks] = useState<ITask[]>([])
@@ -31,15 +29,15 @@ const TasksList = (): React.ReactElement => {
     getTasks().then((response: AxiosResponse) => {
       setTasks(response.data)
       setLoading(false)
-    });
+    })
   }
   const handleClose = (): void => {
     setOpen(false)
   }
-  const handleTaskUpdate = async () => {
-      const response = await getTasks();
-      setTasks(response.data);
-  };
+  const handleTaskUpdate = async (): Promise<void> => {
+    const response = await getTasks()
+    setTasks(response.data)
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -69,7 +67,7 @@ const TasksList = (): React.ReactElement => {
             <Task key={task._id} task={task} handleTaskUpdate={handleTaskUpdate}/>
           ))
         }
-        {tasks.length === 0 && !loading && <h5>No tasks to display</h5>}
+        {tasks.length === 0 && !loading && <p>No tasks to display</p>}
         </TableBody>
       </Table>
     </TableContainer>
@@ -79,7 +77,7 @@ const TasksList = (): React.ReactElement => {
         onClick={handleAdd}>
           Add Task
       </Button>
-      <TaskForm open={open} onClose={handleClose}/>
+      <TaskForm open={open} onClose={handleClose} handleTaskUpdate={handleTaskUpdate}/>
     </div>
     </Container>
   )

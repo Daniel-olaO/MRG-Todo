@@ -66,9 +66,16 @@
 .dialog-box {
   padding: 0 1%;
 }
-/* move button to the left responsively */
 .add-btn-container {
   width: 100%;
   margin-top: 5%;
   
+}
+p{
+  font-weight: bold;
+}
+.error {
+  color: red;
+  font-size: 12px;
+  /* margin-top: 5px; */
 }

@@ -1,15 +1,14 @@
-/* eslint-disable import/extensions */
-import React, { useState } from 'react';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import Checkbox from '@mui/material/Checkbox';
-import EditForm from './EditForm';
-import axios, { type AxiosResponse } from 'axios';
+import React, { useState } from 'react'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import Checkbox from '@mui/material/Checkbox'
+import EditForm from './EditForm'
+import axios, { type AxiosResponse } from 'axios'
 
-const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
+const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api'
 
 export interface TaskProps {
   task: any
@@ -23,29 +22,37 @@ const completeTask = async (id: string): Promise<AxiosResponse> => {
 }
 
 const Task = (props: TaskProps): React.ReactElement => {
-  const { task, handleTaskUpdate } = props;
-  const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted);
-  const [open, setOpen] = useState<boolean>(false);
+  const { task, handleTaskUpdate } = props
+  const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted)
+  const [open, setOpen] = useState<boolean>(false)
 
   // MM-DD-YYYY
-  const formattedDate = new Date(task.date).toLocaleDateString('en-US');
+  const formattedDate = new Date(task.date).toLocaleDateString('en-US')
 
   const handleEdit = (): void => {
-    setOpen(true);
+    setOpen(true)
   }
   const handleClose = (): void => {
-    setOpen(false);
-    
+    setOpen(false)
   }
   const handleDelete = async (id: string): Promise<void> => {
-    const response = await deleteTask(id);
-    handleTaskUpdate();
+    deleteTask(id).then(() => {
+      alert('Task deleted successfully')
+      handleTaskUpdate()
+    })
+      .catch(() => {
+        alert('Error deleting task')
+        handleTaskUpdate()
+      })
   }
   const handleComplete = async (id: string, isCompleted: boolean): Promise<void> => {
-    if (!isCompleted) {
-      const response = await completeTask(id)
-      setIsCompleted(true)
-      handleTaskUpdate();
+    if (isCompleted) {
+      completeTask(id)
+        .then((response) => {
+          console.log(response)
+          setIsCompleted(response.data.isCompleted)
+        })
+      handleTaskUpdate()
     }
   }
   return (
@@ -55,9 +62,9 @@ const Task = (props: TaskProps): React.ReactElement => {
     >
       <TableCell align="right">
         <Checkbox
-          checked={isCompleted}
-          onChange={async() => {
-            await handleComplete(task._id, isCompleted);
+          checked={task.isCompleted}
+          onChange={async () => {
+            await handleComplete(task._id, isCompleted)
           }}
         />
       </TableCell>
@@ -71,12 +78,12 @@ const Task = (props: TaskProps): React.ReactElement => {
         </IconButton>
         <EditForm open={open}
           onClose={handleClose}
-          taskId={task._id} 
+          taskId={task._id}
           handleTaskUpdate={handleTaskUpdate}/>
       </TableCell>
       <TableCell align="right">
-        <IconButton onClick={async() => {
-          await handleDelete(task._id);
+        <IconButton onClick={async () => {
+          await handleDelete(task._id)
         }}>
           <DeleteIcon style={{ color: 'red' }}/>
         </IconButton>
@@ -85,4 +92,4 @@ const Task = (props: TaskProps): React.ReactElement => {
   )
 }
 
-export default Task;
+export default Task

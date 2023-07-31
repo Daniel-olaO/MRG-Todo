@@ -1,12 +1,12 @@
-import React from 'react';
-import axios, { type AxiosResponse } from 'axios';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-const API_URL: any = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
+import React from 'react'
+import axios, { type AxiosResponse } from 'axios'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import DialogTitle from '@mui/material/DialogTitle'
+import Dialog from '@mui/material/Dialog'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api'
 
 export interface EditFormDialogProps {
   open: boolean
@@ -24,7 +24,7 @@ const editTask = async (id: string, newTask: any): Promise<AxiosResponse> => {
     headers: {
       'Content-Type': 'application/json'
     }
-  });
+  })
 }
 const validationSchema = Yup.object({
   title: Yup
@@ -33,25 +33,26 @@ const validationSchema = Yup.object({
     .required('A Task is required'),
   date: Yup
     .date()
-    .required('Time is required')
-});
+    .required('Date is required')
+})
 
 const EditForm = (props: EditFormDialogProps): React.ReactElement => {
-  const { onClose, open, taskId, handleTaskUpdate } = props;
-  const initialValues: MyFormValues = { title: '', date: new Date() };
+  const { onClose, open, taskId, handleTaskUpdate } = props
+  const initialValues: MyFormValues = { title: '', date: new Date() }
 
   const handleEdit = async (id: string, task: any): Promise<void> => {
     editTask(id, task).then(() => {
-      onClose();
-      handleTaskUpdate();
+      onClose()
+      alert('Task edited successfully')
+      handleTaskUpdate()
     })
       .catch(() => {
-        alert('Error editing task: try selecting a later date');
-      });
+        alert('Error editing task: try selecting a later date')
+      })
   }
 
   const handleClose = (): void => {
-    onClose();
+    onClose()
   }
 
   return (
@@ -61,7 +62,7 @@ const EditForm = (props: EditFormDialogProps): React.ReactElement => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={async (values) => {
-            await handleEdit(taskId, values);
+            await handleEdit(taskId, values)
           }}
           >
           {(props) => (
@@ -87,7 +88,7 @@ const EditForm = (props: EditFormDialogProps): React.ReactElement => {
           )}
       </Formik>
     </Dialog>
-  );
+  )
 }
 
 export default EditForm
