@@ -11,30 +11,19 @@ import axios, { type AxiosResponse } from 'axios';
 
 const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
 
-const deleteTask = async (id: string): Promise<any> => {
-  try {
-    await axios.delete(`${API_URL}/delete-task/${id}`,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((response: AxiosResponse) => {
-        console.log(response);
-      })
-  } catch (e) {
-    console.error(e);
-  }
+export interface TaskProps {
+  task: any
+  handleTaskUpdate: () => void
 }
-const completeTask = async (id: string): Promise<any> => {
-  try {
-    return await axios.put(`${API_URL}/complete-task/${id}`)
-  } catch (e) {
-    console.error(e);
-  }
+const deleteTask = async (id: string): Promise<AxiosResponse> => {
+  return await axios.delete(`${API_URL}/delete-task/${id}`)
+}
+const completeTask = async (id: string): Promise<AxiosResponse> => {
+  return await axios.put(`${API_URL}/complete-task/${id}`)
 }
 
-const Task = ({ task }: any): React.ReactElement => {
+const Task = (props: TaskProps): React.ReactElement => {
+  const { task, handleTaskUpdate } = props;
   const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -46,16 +35,17 @@ const Task = ({ task }: any): React.ReactElement => {
   }
   const handleClose = (): void => {
     setOpen(false);
+    
   }
   const handleDelete = async (id: string): Promise<void> => {
     const response = await deleteTask(id);
-    console.log(response);
+    handleTaskUpdate();
   }
   const handleComplete = async (id: string, isCompleted: boolean): Promise<void> => {
     if (!isCompleted) {
       const response = await completeTask(id)
       setIsCompleted(true)
-      console.log(response)
+      handleTaskUpdate();
     }
   }
   return (
@@ -79,7 +69,10 @@ const Task = ({ task }: any): React.ReactElement => {
         <IconButton onClick={handleEdit}>
           <EditIcon/>
         </IconButton>
-        <EditForm open={open} onClose={handleClose} taskId={task._id}/>
+        <EditForm open={open}
+          onClose={handleClose}
+          taskId={task._id} 
+          handleTaskUpdate={handleTaskUpdate}/>
       </TableCell>
       <TableCell align="right">
         <IconButton onClick={async() => {

@@ -57,7 +57,7 @@ export const TaskController = {
         }
     },
     complete_task:async (req: Request, res: Response):Promise<void> => {
-        const update = {isCompleted: true};
+        const update = {isCompleted: false};
         try {
             const task = await Task.findByIdAndUpdate(req.params.id, update);
             if (task) {  

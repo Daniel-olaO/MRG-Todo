@@ -12,6 +12,7 @@ export interface EditFormDialogProps {
   open: boolean
   taskId: string
   onClose: () => void
+  handleTaskUpdate: () => void
 }
 interface MyFormValues {
   title: string
@@ -36,12 +37,13 @@ const validationSchema = Yup.object({
 });
 
 const EditForm = (props: EditFormDialogProps): React.ReactElement => {
-  const { onClose, open, taskId } = props;
+  const { onClose, open, taskId, handleTaskUpdate } = props;
   const initialValues: MyFormValues = { title: '', date: new Date() };
 
   const handleEdit = async (id: string, task: any): Promise<void> => {
     editTask(id, task).then(() => {
       onClose();
+      handleTaskUpdate();
     })
       .catch(() => {
         alert('Error editing task: try selecting a later date');

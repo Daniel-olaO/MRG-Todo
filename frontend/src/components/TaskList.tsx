@@ -17,6 +17,9 @@ import ITask from '../interfaces/Task';
 
 const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
 
+const getTasks = async (): Promise<AxiosResponse> => {
+  return await axios.get(`${API_URL}/task`);
+}
 const TasksList = (): React.ReactElement => {
   const [tasks, setTasks] = useState<ITask[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -24,17 +27,25 @@ const TasksList = (): React.ReactElement => {
 
   const handleAdd = (): void => {
     setOpen(true)
+    setLoading(true)
+    getTasks().then((response: AxiosResponse) => {
+      setTasks(response.data)
+      setLoading(false)
+    });
   }
   const handleClose = (): void => {
     setOpen(false)
   }
+  const handleTaskUpdate = async () => {
+      const response = await getTasks();
+      setTasks(response.data);
+  };
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`${API_URL}/task`)
+    getTasks()
       .then((response: AxiosResponse) => {
         setTasks(response.data)
-        console.log(response.data)
         setLoading(false)
       })
   }, [])
@@ -55,7 +66,7 @@ const TasksList = (): React.ReactElement => {
         {loading
           ? <h5>Loading tasks...</h5>
           : tasks.map((task: ITask) => (
-            <Task key={task._id} task={task}/>
+            <Task key={task._id} task={task} handleTaskUpdate={handleTaskUpdate}/>
           ))
         }
         {tasks.length === 0 && !loading && <h5>No tasks to display</h5>}
