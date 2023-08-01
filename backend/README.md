@@ -41,7 +41,7 @@ npm run test
 use npm start to start the server
 
 ```bash
-npm start
+npm run dev
 ```
 
 # Path
