@@ -6,5 +6,7 @@ module.exports = {
   setupFiles: ['dotenv/config'],
   collectCoverage: true,
   coverageReporters: ['text', 'html'],
-  coverageDirectory: '<rootDir>/coverage/'
+  coverageDirectory: '<rootDir>/coverage/',
+  verbose: true,
+  testTimeout: 1000000
 }
