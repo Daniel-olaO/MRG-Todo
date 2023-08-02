@@ -9,7 +9,6 @@ This is a server for the MRG-todo app. It is a simple to-do app that allows user
 - [Path](#path)
 - [Tools](#tools)
 - [Author](#author)
-- [references](#references)
 
 # Installation
 

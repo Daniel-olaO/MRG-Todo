@@ -6,7 +6,6 @@ This is a react app that allows the user to Add, Edit, Delete and View their to-
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Demo](#demo)
 - [Tools](#tools)
 - [Author](#author)
 - [references](#references)
@@ -38,12 +37,6 @@ use npm start to start the app
 ```bash
 npm start
 ```
-
-users must sign up with a name, a phone number, an email address and a password. The phone number must have the country code of the country in which the phone number originated: Canada -> +16574832074. The email address must be valid. The user will receive a welcome text message. The user will also receive a text message every day with the NASA Astronomy Picture of the Day.
-
-# Demo
-
-link: x
 
 # Tools
 
