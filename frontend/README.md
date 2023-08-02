@@ -29,7 +29,7 @@ npm run lint
 add a .env file to the root directory and add the following:
 
 ```bash
-REACT_APP_API_BASE_URL=your_nasa_apod_api_url
+REACT_APP_API_BASE_URL=your_todo_api_url
 ```
 
 use npm start to start the app
