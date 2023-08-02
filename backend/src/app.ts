@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import {app} from './server';
 
-
 const HTTP_PORT = process.env.HTTP_PORT || 8000;
 
 const connectToDatabase = async (): Promise<void> => {
