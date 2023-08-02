@@ -23,7 +23,6 @@ const completeTask = async (id: string): Promise<AxiosResponse> => {
 
 const Task = (props: TaskProps): React.ReactElement => {
   const { task, handleTaskUpdate } = props
-  const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted)
   const [open, setOpen] = useState<boolean>(false)
 
   // MM-DD-YYYY
@@ -46,13 +45,11 @@ const Task = (props: TaskProps): React.ReactElement => {
       })
   }
   const handleComplete = async (id: string, isCompleted: boolean): Promise<void> => {
-    if (isCompleted) {
+    if (!isCompleted) {
       completeTask(id)
-        .then((response) => {
-          console.log(response)
-          setIsCompleted(response.data.isCompleted)
+        .then(() => {
+          handleTaskUpdate()
         })
-      handleTaskUpdate()
     }
   }
   return (
@@ -64,7 +61,7 @@ const Task = (props: TaskProps): React.ReactElement => {
         <Checkbox
           checked={task.isCompleted}
           onChange={async () => {
-            await handleComplete(task._id, isCompleted)
+            await handleComplete(task._id, task.isCompleted)
           }}
         />
       </TableCell>

@@ -1,16 +1,28 @@
-import * as dotenv from 'dotenv';
-import {app, connectDB} from './server';
-const HTTP_PORT = process.env.HTTP_PORT || 8000;
+import mongoose, { ConnectOptions} from 'mongoose';
+import dotenv from 'dotenv';
+import {app} from './server';
 
 dotenv.config();
 
-try {
-   app.listen(HTTP_PORT, async(): Promise<void> => {
-      await connectDB();
-      console.log(`Connected successfully on port ${HTTP_PORT}`);
+const HTTP_PORT = process.env.HTTP_PORT || 8000;
+
+const connectToDatabase = async (): Promise<void> => {
+  try {
+
+    await mongoose.createConnection(`${process.env.DB_CONNECTION_URL}`);
+
+    console.log('Connected to the database');
+  } catch (error) {
+    console.log('Cannot connect to the database!', error);
+    process.exit();
+  }
+};
+
+app.listen(HTTP_PORT, async(): Promise<void> => {
+   connectToDatabase().then(() => {
+      console.log(`Server is running on port ${HTTP_PORT}`);
    })
-} catch (error) {
-   if (error instanceof Error) {
-      console.log(`Error occured: (${error.message})`)
-   }
-}
+   .catch(error => {
+      console.log(error);
+   });
+});

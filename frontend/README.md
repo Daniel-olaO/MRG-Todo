@@ -19,6 +19,12 @@ use npm install to install all dependencies
 npm install
 ```
 
+use npm run lint to run lint
+
+```bash
+npm run lint
+```
+
 # Usage
 
 add a .env file to the root directory and add the following:

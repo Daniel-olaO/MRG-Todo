@@ -6,20 +6,11 @@ import { Task } from "../database/model";
 
 export const TaskController = {
     create_task: async (req: Request, res: Response):Promise<void> => {
-        // const today:string = new Date().toLocaleDateString("en-US");
 
         try{
             const {title, date} = req.body;
-            // eslint-disable-next-line no-constant-condition
-            if (true){
-                const task = await Task.create({title, date});
-                res.status(201).json(task);
-            }
-            else{
-                res.status(400).json({
-                    message: "date must be greater than or equal to current date"
-                });
-            }
+            const task = await Task.create({title, date});
+            res.status(201).json(task);
         }
         catch(error){
             res.status(500).json(error);
@@ -35,9 +26,9 @@ export const TaskController = {
         }
     },
     get_all_tasks: async (req: Request, res: Response):Promise<void> => {
+        console.log("TaskController");
         try{
             const task = await Task.find();
-            // console.log(task);
             res.status(200).json(task);
         }
         catch(error){

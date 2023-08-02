@@ -1,25 +1,16 @@
-const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+import mongoose from 'mongoose';
+import * as crypto from "crypto";
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
-let mongod: any = null;
+let mongod: MongoMemoryServer;
 
 export const connect = async () => {
-   mongod = new MongoMemoryServer.create();
-  const uri = await mongod.getUri();
+   mongod = await MongoMemoryServer.create();
+   const uri = await mongod.getUri();
+   const randomURL = randomizeMongoURL(uri);
+  await mongoose.createConnection(randomURL);
+};
 
-  await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-  });
-};
-export const dropCollections = async () => {
-  if (mongod) {
-    const collections = await mongoose.connection.db.collections();
-    for (let collection of collections) {
-      await collection.remove();
-    }
-  }
-};
 export const disconnect = async () => {
   if (mongod){
    await mongoose.connection.dropDatabase();
@@ -27,3 +18,10 @@ export const disconnect = async () => {
     await mongod.stop();
   }
 };
+
+const randomizeMongoURL = (url: string): string => {
+		return url.replace(
+			/([^/]\/)([^/][a-zA-Z-_0-9]+)/,
+			`$1${crypto.randomBytes(4).toString('hex')}`,
+		);
+}

@@ -1,7 +1,6 @@
 import { app } from '../src/server'
 import * as db from './db'
 import supertest from 'supertest';
-import {Task} from '../src/database/model'
 import {
    validTask,
    TaskMissingTaskName,
@@ -15,9 +14,6 @@ describe('Test request with mongoose', () => {
    beforeAll(async () => {
       db.connect()
    });
-   afterEach(async () => {
-      db.dropCollections()
-   });
    afterAll(async () => {
       db.disconnect();
    });
@@ -30,8 +26,7 @@ describe('Test request with mongoose', () => {
       expect(message).toBe('Welcome to MRG todo API!');
    });
    test('should create a new Task', async() => {
-      const newTask = new Task(validTask);
-      const res = await request.post('/api/create-task').send(newTask)
+      const res = await request.post('/api/create-task').send(validTask)
       expect(res.statusCode).toBe(201);
       expect(res.body).toHaveProperty('_id');
    });
