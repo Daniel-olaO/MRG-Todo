@@ -49,6 +49,7 @@ describe('Test request with mongoose', () => {
   test('should complete a task', async () => {
     const res = await request.put(`/api/complete-task/${taskId}`).send()
     expect(res.statusCode).toEqual(200)
+    expect(res.body.isCompleted).toBeTruthy()
   })
   test('should delete a task', async () => {
     const res = await request.delete(`/api/delete-task/${taskId}`).send()

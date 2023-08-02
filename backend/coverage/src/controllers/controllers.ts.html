@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -126,23 +126,15 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,7 +144,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -160,7 +151,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,7 +177,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,79 +185,72 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response } from "express";
-import { Task } from "../database/model";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type Request, type Response } from 'express'
+import { Task } from '../database/model'
 &nbsp;
 export const TaskController = {
-    create_task: async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
-&nbsp;
-        try{
-            const {title, date} = req.body;
-            const task = await Task.create({title, date});
-            res.status(201).json(task);
-        }
-        catch(error){
-<span class="cstat-no" title="statement not covered" >            res.status(500).json(error);</span>
-        }
-    },
-    get_task: async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
-        try{
-            const task = await Task.findById(req.params._id);
-            res.status(200).json(task);
-        }
-        catch(error){
-<span class="cstat-no" title="statement not covered" >            res.status(500).json(error);</span>
-        }
-    },
-    get_all_tasks: async (req: Request, res: Response) =&gt; {
-        try{
-            const tasks = await Task.find();
-            res.status(200).json(tasks);
-        }
-        catch(error){
-<span class="cstat-no" title="statement not covered" >            res.status(500).json(error);</span>
-        }
-    },
-    update_task: async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
-        const update = {
-            title: req.body.title,
-            date: req.body.date,
-            isCompleted: false
-        };
-        try {
-            const updateTask = await Task.findByIdAndUpdate(req.params.id, update);
-            if (updateTask) {
-                res.status(200).json(updateTask);
-            }
-        } catch (error) {
-<span class="cstat-no" title="statement not covered" >            res.status(400).json(error);</span>
-        }
-    },
-    complete_task:async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
-        const update = {isCompleted: true};
-        try {
-            const task = await Task.findByIdAndUpdate(req.params.id, update);
-            if (task) {  
-                res.status(200).json(task);
-            }
-        } catch (error) {
-<span class="cstat-no" title="statement not covered" >            res.status(400).json(error);</span>
-        }
-    },
-    delete_task:async (req: Request, res: Response):Promise&lt;void&gt; =&gt; {
-        try{
-            const task = await Task.findByIdAndDelete(req.params._id);
-            res.status(204).send(task);
-        }
-        catch(error) {
-<span class="cstat-no" title="statement not covered" >            res.status(400).json(error);</span>
-        }
+  create_task: async (req: Request, res: Response): Promise&lt;void&gt; =&gt; {
+    try {
+      const { title, date } = req.body
+      const task = await Task.create({ title, date })
+      res.status(201).json(task)
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      res.status(500).json(error)</span>
     }
+  },
+  get_task: async (req: Request, res: Response): Promise&lt;void&gt; =&gt; {
+    try {
+      const task = await Task.findById(req.params._id)
+      res.status(200).json(task)
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      res.status(500).json(error)</span>
+    }
+  },
+  get_all_tasks: async (req: Request, res: Response) =&gt; {
+    try {
+      const tasks = await Task.find()
+      res.status(200).json(tasks)
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      res.status(500).json(error)</span>
+    }
+  },
+  update_task: async (req: Request, res: Response): Promise&lt;void&gt; =&gt; {
+    const update = {
+      title: req.body.title,
+      date: req.body.date,
+      isCompleted: false
+    }
+    try {
+      const updateTask = await Task.findByIdAndUpdate(req.params.id, update)
+      if (updateTask != null) {
+        res.status(200).json(updateTask)
+      }
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      res.status(400).json(error)</span>
+    }
+  },
+  complete_task: async (req: Request, res: Response): Promise&lt;void&gt; =&gt; {
+    const update = { isCompleted: true }
+    const options = { new: true }
+    try {
+      const task = await Task.findByIdAndUpdate(req.params.id, update, options)
+      res.status(200).json(task)
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      res.status(400).json(error)</span>
+    }
+  },
+  delete_task: async (req: Request, res: Response): Promise&lt;void&gt; =&gt; {
+    try {
+      const task = await Task.findByIdAndDelete(req.params._id)
+      res.status(204).send(task)
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      res.status(400).json(error)</span>
+    }
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -277,7 +259,7 @@ export const TaskController = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-02T04:13:35.472Z
+                at 2023-08-02T13:15:38.310Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

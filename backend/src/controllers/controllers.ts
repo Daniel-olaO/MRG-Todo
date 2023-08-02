@@ -44,11 +44,10 @@ export const TaskController = {
   },
   complete_task: async (req: Request, res: Response): Promise<void> => {
     const update = { isCompleted: true }
+    const options = { new: true }
     try {
-      const task = await Task.findByIdAndUpdate(req.params.id, update)
-      if (task != null) {
-        res.status(200).json(task)
-      }
+      const task = await Task.findByIdAndUpdate(req.params.id, update, options)
+      res.status(200).json(task)
     } catch (error) {
       res.status(400).json(error)
     }
