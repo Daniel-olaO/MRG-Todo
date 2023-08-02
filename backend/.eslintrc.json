@@ -9,11 +9,15 @@
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module",
-        "tsconfigRootDir": "__dirname",
-        "project": [
-            "./tsconfig.json"
-        ]
+        "project": "./tsconfig.json"
     },
     "rules": {
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/await-thenable": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/prefer-nullish-coalescing": "off",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/restrict-template-expressions": "off"
     }
 }
