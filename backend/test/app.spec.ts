@@ -6,10 +6,13 @@ import {
    TaskMissingTaskName,
    TaskMissingDate,
    TaskWithWrongDataType,
-   TaskWithWrongDate
+   TaskWithWrongDate,
+   TaskUpdateData,
 } from './mockData';
 
 const request = supertest(app)
+let taskId: string = '';
+
 describe('Test request with mongoose', () => {
    beforeAll(async () => {
       db.connect()
@@ -27,8 +30,28 @@ describe('Test request with mongoose', () => {
    });
    test('should create a new Task', async() => {
       const res = await request.post('/api/create-task').send(validTask)
+      taskId = res.body._id;
       expect(res.statusCode).toBe(201);
       expect(res.body).toHaveProperty('_id');
+   });
+   test('should return a task by id', async () => {
+      const res = await request.get(`/api/task/${taskId}`).send()
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty('_id');
+   });
+   test('should update a task', async () => {
+      const res = await request.put(`/api/update-task/${taskId}`).send(TaskUpdateData)
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body.isCompleted).toBeFalsy();
+   });
+   test('should complete a task', async () => {
+      const res = await request.put(`/api/complete-task/${taskId}`).send()
+      expect(res.statusCode).toEqual(200);
+   });
+   test('should delete a task', async () => {
+      const res = await request.delete(`/api/delete-task/${taskId}`).send()
+      expect(res.statusCode).toEqual(204);
    });
    test('should fail if gave an incorrect date', async () => {
       const res = await request.post('/api/create-task').send(TaskWithWrongDate)

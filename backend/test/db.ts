@@ -8,6 +8,7 @@ export const connect = async () => {
    mongod = await MongoMemoryServer.create();
    const uri = await mongod.getUri();
    const randomURL = randomizeMongoURL(uri);
+   console.log(randomURL);
   await mongoose.createConnection(randomURL);
 };
 

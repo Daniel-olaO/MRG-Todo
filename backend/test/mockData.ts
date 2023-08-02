@@ -1,4 +1,4 @@
-//store tomorrow's date in a variable
+//stored tomorrow's date in a variable
 const tomorrow: Date = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -22,4 +22,8 @@ export const TaskMissingDate = {
 export const TaskWithWrongDataType = {
     'title': 12,
     'date': 'ehw'
+}
+export const TaskUpdateData = {
+    'title': 'write job description',
+    'date': tomorrow
 }

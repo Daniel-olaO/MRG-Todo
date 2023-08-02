@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
-// import moment from 'moment';
 import { Task } from "../database/model";
-
-// moment("12-25-1995", "MM-DD-YYYY");
 
 export const TaskController = {
     create_task: async (req: Request, res: Response):Promise<void> => {
@@ -25,11 +22,10 @@ export const TaskController = {
             res.status(500).json(error);
         }
     },
-    get_all_tasks: async (req: Request, res: Response):Promise<void> => {
-        console.log("TaskController");
+    get_all_tasks: async (req: Request, res: Response) => {
         try{
-            const task = await Task.find();
-            res.status(200).json(task);
+            const tasks = await Task.find();
+            res.status(200).json(tasks);
         }
         catch(error){
             res.status(500).json(error);

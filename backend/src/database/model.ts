@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 dotenv.config();
 
-mongoose.createConnection(`${process.env.DB_CONNECTION_URL}`)
+const conn = mongoose.createConnection(`${process.env.DB_CONNECTION_URL}`);
 
 export type TaskDocument = mongoose.Document & {
     title: string;
@@ -18,4 +18,4 @@ const TaskSchema = new mongoose.Schema<TaskDocument>({
 });
 
 
-export const Task = mongoose.model<TaskDocument>('Task', TaskSchema);
+export const Task = conn.model<TaskDocument>("Task", TaskSchema);
