@@ -12,6 +12,8 @@ defaults:
   run:
     working-directory: ./backend
 
+env:
+  DB_CONNECTION_URL: ${{ secrets.DB_CONNECTION_URL }}
 jobs:
   build:
     runs-on: ubuntu-latest
