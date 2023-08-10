@@ -71,7 +71,7 @@ const Task = (props: TaskProps): React.ReactElement => {
       <TableCell align="right" className='task-cell'>{formattedDate}</TableCell>
       <TableCell align="right">
         <IconButton onClick={handleEdit}>
-          <EditIcon/>
+          <EditIcon style={{ color: 'black' }}/>
         </IconButton>
         <EditForm open={open}
           onClose={handleClose}

@@ -13,6 +13,7 @@ import {
 
 const request = supertest(app)
 let taskId: string = ''
+const dummyTaskId: string = '5f9e9b3b9b0b3c1b3c1b3c1b'
 
 describe('Test request with mongoose', () => {
   beforeAll(async () => {
@@ -54,6 +55,11 @@ describe('Test request with mongoose', () => {
   test('should delete a task', async () => {
     const res = await request.delete(`/api/delete-task/${taskId}`).send()
     expect(res.statusCode).toEqual(204)
+  })
+  test('should fail if the task does not exist', async () => {
+    const res = await request.get(`/api/task/${dummyTaskId}`).send()
+    expect(res.statusCode).toEqual(403)
+    expect(res.body).toHaveProperty('message')
   })
   test('should fail if gave an incorrect date', async () => {
     const res = await request.post('/api/create-task').send(TaskWithWrongDate)

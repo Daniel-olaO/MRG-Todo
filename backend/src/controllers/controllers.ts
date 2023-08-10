@@ -14,7 +14,11 @@ export const TaskController = {
   get_task: async (req: Request, res: Response): Promise<void> => {
     try {
       const task = await Task.findById(req.params._id)
-      res.status(200).json(task)
+      if (task) {
+        res.status(200).json(task)
+      } else {
+        res.status(403).json({ message: 'Task not found' })
+      }
     } catch (error) {
       res.status(500).json(error)
     }
