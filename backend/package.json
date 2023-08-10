@@ -9,7 +9,7 @@
     "dev": "nodemon src/app.ts",
     "test": "jest ./test/app.spec.ts",
     "test:watch": "jest --watch ./test/app.spec.ts",
-    "lint": "eslint --fix --ext .ts ./*"
+    "lint": "eslint --fix --ext .ts ."
   },
   "keywords": [],
   "author": "",
