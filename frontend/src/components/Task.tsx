@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import Checkbox from '@mui/material/Checkbox'
 import EditForm from './EditForm'
-import axios, { type AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 const API_URL: string = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api'
 

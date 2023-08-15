@@ -1,5 +1,5 @@
 import React from 'react'
-import axios, { type AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import DialogTitle from '@mui/material/DialogTitle'
