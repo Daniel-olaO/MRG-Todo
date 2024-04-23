@@ -5,7 +5,7 @@ import { connect} from './database/dbconfig';
 
 const HTTP_PORT = process.env.HTTP_PORT || 8000;
 
-const app: Express = express();
+export const app: Express = express();
 dotenv.config();
 app.use(express.json());
 
@@ -18,3 +18,4 @@ connect()
 app.listen(HTTP_PORT, ()=>{
     console.log(`Sever listening on ${HTTP_PORT}`);
 });
+

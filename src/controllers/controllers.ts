@@ -1,46 +1,13 @@
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import { UserModel, TaskModel } from "../database/model";
+import { Task } from "../database/model";
 
 
-export const User = {
-    register_user: async (req: Request, res: Response) => {
-        try{
-            const {username, password, email} = req.body;
-            const user = await UserModel.create({username, password, email});
-            res.status(201).json({user});
-        }
-        catch(error){
-            res.status(500).json({error});
-        }
-    },
-    check_user: async (req: Request, res: Response) => {
-        try {
-            const {username, password} = req.body;
-            const result = await UserModel.findOne({username: username});
 
-            if (result){
-                const isPasswordValid = await bcrypt.compare(password, result.authentication.password);
-
-                if (isPasswordValid){
-                    res.status(200).json({message: "login successful"});
-                }
-            }
-            else{
-                res.status(404).json({message: "user not found"});
-            }
-        }
-        catch(error){
-            res.status(500).json({error});
-        }
-    },
-}
-
-export const Task = {
+export const TaskController = {
     create_task: async (req: Request, res: Response) => {
         try{
-            const {title, time} = req.body;
-            const task = await TaskModel.create({title, time});
+            const {title, date} = req.body;
+            const task = await Task.create({title, date});
             res.status(201).json({task});
         }
         catch(error){
@@ -49,7 +16,7 @@ export const Task = {
     },
     get_task: async (req: Request, res: Response) => {
         try{
-            const task = await TaskModel.find({username: req.params.username});
+            const task = await Task.find();
             res.status(200).json({task});
         }
         catch(error){
@@ -58,10 +25,10 @@ export const Task = {
     },
     update_task: async (req: Request, res: Response) => {
         try {
-            const task = await TaskModel.findById(req.params.id);
+            const task = await Task.findById(req.params.id);
             if (task){
                 const {title, time} = req.body;
-                const updatedTask = await TaskModel.findByIdAndUpdate(req.params.id, {title, time});
+                const updatedTask = await Task.findByIdAndUpdate(req.params.id, {title, time});
                 res.status(200).json({updatedTask});
             }
             else{
@@ -75,7 +42,7 @@ export const Task = {
     complete_task:async (req: Request, res: Response) => {
         const update = {isCompleted: true};
         try {
-            const task = await TaskModel.findByIdAndUpdate(req.params.id, update);
+            const task = await Task.findByIdAndUpdate(req.params.id, update);
             if (task) {
                 res.status(200).json(task);
             }
@@ -86,8 +53,8 @@ export const Task = {
     },
     delete_task:async (req: Request, res: Response) => {
         try{
-            const task = await TaskModel.findByIdAndDelete(req.params.id);
-            res.status(200).end(task);
+            const task = await Task.findByIdAndDelete(req.params.id);
+            res.status(204).end(task);
         }
         catch(error) {
             res.status(400).json({error});
